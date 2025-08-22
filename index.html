@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrating Peter's 3 Years at Applied!</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" 
+        type="image/png" 
+        href="./public/peter_cardens.png"
+    />
+    <style>
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100vh) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(720deg); }
+        }
+        .confetti {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: transparent;
+            top: -20px;
+            z-index: 1;
+            animation: confetti-fall linear forwards;
+        }
+        body {
+            background: #06204a;
+            overflow-x: hidden;
+            width: 100%;
+          
+        }
+        #content {
+            margin: auto;
+            max-width: 800px;
+        }
+        .celebration-banner {
+            background: linear-gradient(45deg, #0038ff, #4ecdc4);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        #photoGallery img {
+            transition: transform 0.3s ease;
+            border-radius: 4px;
+        }
+        #photoGallery {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+        #photoGallery img:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+    <!-- Confetti Container -->
+    <div id="content">
+      <div id="confettiContainer" class="fixed inset-0 pointer-events-none z-50"></div>
+
+      <div class="container mx-auto px-4 py-8">
+          <!-- Celebratory Banner -->
+          <div class="celebration-banner text-white rounded-2xl shadow-2xl mb-12 p-12 text-center relative overflow-hidden">
+              <div class="absolute inset-0 opacity-20 bg-cover bg-center" style="background-image: url('/api/placeholder/1200/400')"></div>
+              <div class="relative z-10">
+                  <h1 class="text-5xl font-black mb-4 tracking-tight drop-shadow-lg">
+                      It's PeterC's Peter3(rd year) Anniversary!
+                  </h1>
+                  <button id="celebrateButton" class="bg-white text-blue-500 px-8 py-4 rounded-full text-xl font-bold hover:bg-blue-50 transition-all shadow-lg">
+                      🎉 cheers! (tap to play) 🔊
+                  </button>
+                          <!-- Audio Element -->
+                  <audio id="celebrationAudio">
+                      <source src="./public/Peter3.mp3" type="audio/mp3">
+                      Your browser does not support the audio element.
+                  </audio>
+              </div>
+          </div>
+
+
+          <div id="photoGallery">
+              <img src="./public/anthony.png"/>
+              <img src="./public/young.png"/>
+              <img src="./public/alan.png"/>
+              <img src="./public/ajit.png"/>
+              <img src="./public/nick.png"/>
+              <img src="./public/amelia.png"/>
+              <img src="./public/avery.png"/>
+              <img src="./public/chris.png"/>
+              <img src="./public/deepshika.png"/>
+              <img src="./public/carolyn.png"/>
+              <img src="./public/elmer.png"/>
+              <img src="./public/francis-meme.png"/>
+              <img src="./public/francis-real.png"/>
+              <img src="./public/justin.png"/>
+              <img src="./public/kai.png"/>
+              <img src="./public/michael.png"/>
+              <img src="./public/micah.png"/>
+              <img src="./public/parth.png"/>
+              <img src="./public/rami.png"/>
+              <img src="./public/spencer.png"/>
+              <img src="./public/tiffany.png"/>
+          </div>
+
+      </div>
+  </div>
+
+    <script>
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#f9d56e', '#ff9ff3'];
+            const container = document.getElementById('confettiContainer');
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add('confetti');
+                
+                // Randomize properties
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                container.appendChild(confetti);
+                
+                // Remove confetti after animation
+                confetti.addEventListener('animationend', () => {
+                    confetti.remove();
+                });
+            }
+        }
+      
+         // Celebration function to play music and create confetti
+        function startCelebration() {
+            const audio = document.getElementById('celebrationAudio');
+            
+            // Check if audio is already playing
+            if (audio.paused) {
+                audio.play().catch(error => {
+                    console.error('Error playing audio:', error);
+                    alert('Unable to play celebration music. The browser might be blocking autoplay.');
+                });
+            } else {
+                audio.pause();
+                audio.currentTime = 0;
+            }
+
+            // Create confetti
+            createConfetti();
+        }
+
+        // Function to load and display photos from /assets directory
+        document.getElementById('celebrateButton').addEventListener('click', startCelebration);
+    </script>
+</body>
+</html>
